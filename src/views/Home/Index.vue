@@ -5,7 +5,13 @@
         class="text-center mx-auto mt-1"
         @click="toogle_selection_panel()"
       >
-        <h4>MD5</h4>
+        <h4>
+          {{
+            algorithms[algorithmName.name].types[
+              algorithmName.type
+            ].toUpperCase()
+          }}
+        </h4>
 
         <v-icon v-if="selectionPanel">
           {{ icons.mdiChevronDown }}
@@ -42,6 +48,7 @@ import {
   mdiChevronUp
 } from "@mdi/js";
 import SelectionPanel from "./SelectionPanel.vue";
+import { mapState } from "vuex";
 
 export default {
   name: "Home",
@@ -71,6 +78,10 @@ export default {
 
       selectionPanel: false
     };
+  },
+
+  computed: {
+    ...mapState({ algorithmName: state => state.selectedAlgorithm })
   },
 
   methods: {

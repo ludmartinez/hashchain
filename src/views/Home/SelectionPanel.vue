@@ -5,7 +5,7 @@
         <v-list dark color="transparent" dense>
           <v-subheader class="px-4">Algorithms</v-subheader>
 
-          <v-list-item-group v-model="selectedAlgorithm.name" mandatory>
+          <v-list-item-group v-model="algorithmName" mandatory>
             <v-list-item
               v-for="(algorithm, i) in algorithms"
               :key="i"
@@ -21,9 +21,9 @@
         <v-list dark color="transparent" dense>
           <v-subheader class="px-4">Types</v-subheader>
 
-          <v-list-item-group v-model="selectedAlgorithm.type" mandatory>
+          <v-list-item-group v-model="algorithmType" mandatory>
             <v-list-item
-              v-for="(type, i) in algorithms[selectedAlgorithm.name].types"
+              v-for="(type, i) in algorithms[algorithmName].types"
               :key="i"
               class="mb-2"
             >
@@ -47,13 +47,26 @@ export default {
     }
   },
 
-  data() {
-    return {
-      selectedAlgorithm: {
-        name: 1,
-        type: 0
+  computed: {
+    algorithmName: {
+      get() {
+        return this.$store.state.selectedAlgorithm.name;
+      },
+
+      set(value) {
+        this.$store.commit("UPDATE_ALGORITHM_NAME", value);
       }
-    };
+    },
+
+    algorithmType: {
+      get() {
+        return this.$store.state.selectedAlgorithm.type;
+      },
+
+      set(value) {
+        this.$store.commit("UPDATE_ALGORITHM_TYPE", value);
+      }
+    }
   }
 };
 </script>
