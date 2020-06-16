@@ -14,6 +14,7 @@ export default new Vuex.Store({
   mutations: {
     UPDATE_ALGORITHM_NAME(state, name) {
       state.selectedAlgorithm.name = name;
+      state.selectedAlgorithm.type = 0;
     },
 
     UPDATE_ALGORITHM_TYPE(state, type) {
