@@ -5,6 +5,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    action: "encrypt",
+
     selectedAlgorithm: {
       name: 0,
       type: 0
@@ -19,10 +21,20 @@ export default new Vuex.Store({
 
     UPDATE_ALGORITHM_TYPE(state, type) {
       state.selectedAlgorithm.type = type;
+    },
+
+    UPDATE_ACTION(state) {
+      state.action === "encrypt"
+        ? (state.action = "decrypt")
+        : (state.action = "encrypt");
     }
   },
 
-  actions: {},
+  actions: {
+    toogle_action({ commit }) {
+      commit("UPDATE_ACTION");
+    }
+  },
 
   modules: {}
 });

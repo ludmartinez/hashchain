@@ -21,6 +21,7 @@
           {{ icons.mdiChevronUp }}
         </v-icon>
       </v-toolbar-title>
+
       <div class="lock-unlock-btn">
         <v-btn icon @click="toogle_action()">
           <v-icon v-if="action === 'encrypt'">
@@ -48,7 +49,7 @@ import {
   mdiChevronUp
 } from "@mdi/js";
 import SelectionPanel from "./SelectionPanel.vue";
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "Home",
@@ -57,8 +58,6 @@ export default {
 
   data() {
     return {
-      action: "encrypt",
-
       algorithms: [
         {
           name: "Message Diggest",
@@ -81,15 +80,14 @@ export default {
   },
 
   computed: {
-    ...mapState({ algorithmName: state => state.selectedAlgorithm })
+    ...mapState({
+      algorithmName: state => state.selectedAlgorithm,
+      action: state => state.action
+    })
   },
 
   methods: {
-    toogle_action() {
-      this.action === "encrypt"
-        ? (this.action = "decrypt")
-        : (this.action = "encrypt");
-    },
+    ...mapActions(["toogle_action"]),
 
     toogle_selection_panel() {
       this.selectionPanel = !this.selectionPanel;
