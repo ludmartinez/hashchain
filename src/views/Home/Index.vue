@@ -28,9 +28,9 @@
       </div>
     </v-toolbar>
 
-    <!-- <div v-if="selectionPanel" class="mx-n4 rounded-xl bk-opacity mt-5">
+    <div v-if="selectionPanel" class="mx-n4 rounded-xl bk-opacity mt-5">
       <selection-panel :algorithms="algorithms" />
-    </div> -->
+    </div>
   </v-container>
 </template>
 
@@ -41,12 +41,12 @@ import {
   mdiChevronDown,
   mdiChevronUp
 } from "@mdi/js";
-// import SelectionPanel from "./SelectionPanel.vue";
+import SelectionPanel from "./SelectionPanel.vue";
 
 export default {
   name: "Home",
 
-  // components: { SelectionPanel },
+  components: { SelectionPanel },
 
   data() {
     return {
