@@ -1,6 +1,7 @@
 <template>
   <v-container class="white px-4 text-center">
-    <h5>Encrypt</h5>
+    <h5>{{ action | capitalize }}</h5>
+
     <v-textarea
       background-color="#CBC5EA"
       color="#5D737E"
@@ -16,7 +17,13 @@
 
 <script>
 export default {
-  name: "EncryptionForm"
+  name: "EncryptionForm",
+
+  computed: {
+    action() {
+      return this.$store.state.action;
+    }
+  }
 };
 </script>
 

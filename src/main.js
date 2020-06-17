@@ -3,8 +3,11 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
+import { capitalize } from "./filters/textFilters";
 
 Vue.config.productionTip = false;
+
+Vue.filter("capitalize", capitalize);
 
 new Vue({
   router,
