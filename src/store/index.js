@@ -1,11 +1,14 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import algorithmService from "../algorithms";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     action: "encrypt",
+
+    algorithms: {},
 
     selectedAlgorithm: {
       name: 0,
@@ -14,6 +17,10 @@ export default new Vuex.Store({
   },
 
   mutations: {
+    UPDATE_ALGORITHMS(state, payload) {
+      state.algorithms = payload;
+    },
+
     UPDATE_ALGORITHM_NAME(state, name) {
       state.selectedAlgorithm.name = name;
       state.selectedAlgorithm.type = 0;
@@ -33,6 +40,11 @@ export default new Vuex.Store({
   actions: {
     toogle_action({ commit }) {
       commit("UPDATE_ACTION");
+    },
+
+    async retrive_algorithms({ commit }) {
+      const algorithms = await algorithmService();
+      commit("UPDATE_ALGORITHMS", algorithms);
     }
   },
 

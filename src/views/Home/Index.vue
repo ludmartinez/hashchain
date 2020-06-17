@@ -1,24 +1,34 @@
 <template>
   <v-container class="blue-grey darken-1 rounded-t-xl px-4">
-    <v-toolbar flat tile dark dense outlined color="transparent">
+    <v-toolbar
+      flat
+      tile
+      dark
+      dense
+      outlined
+      color="transparent"
+      v-touch="{
+        down: () => toogle_selection_panel()
+      }"
+    >
       <v-toolbar-title
         class="text-center mx-auto mt-1"
         @click="toogle_selection_panel()"
       >
-        <h4>
+        <h4 v-if="algorithms.length">
           {{
-            algorithms[algorithmName.name].types[
-              algorithmName.type
+            algorithms[selectedAlgorithm.name].types[
+              selectedAlgorithm.type
             ].toUpperCase()
           }}
         </h4>
 
         <v-icon v-if="selectionPanel">
-          {{ icons.mdiChevronDown }}
+          {{ icons.mdiChevronUp }}
         </v-icon>
 
         <v-icon v-else>
-          {{ icons.mdiChevronUp }}
+          {{ icons.mdiChevronDown }}
         </v-icon>
       </v-toolbar-title>
 
@@ -63,32 +73,18 @@ export default {
 
   data() {
     return {
-      algorithms: [
-        {
-          name: "Message Diggest",
-          types: ["md2", "md4", "md5"]
-        },
-        {
-          name: "Secure Hash Algorithm",
-          types: ["sha-1", "sha-2", "sha-3"]
-        },
-        {
-          name: "Data Encryption Standar",
-          types: ["des"]
-        }
-      ],
-
       icons: { mdiLock, mdiLockOpenVariant, mdiChevronDown, mdiChevronUp },
 
       selectionPanel: false
     };
   },
 
+  beforeCreate() {
+    this.$store.dispatch("retrive_algorithms");
+  },
+
   computed: {
-    ...mapState({
-      algorithmName: state => state.selectedAlgorithm,
-      action: state => state.action
-    })
+    ...mapState(["algorithms", "selectedAlgorithm", "action"])
   },
 
   methods: {
