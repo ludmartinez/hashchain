@@ -38,6 +38,10 @@
     <div v-if="selectionPanel" class="mx-n4 rounded-xl bk-opacity mt-5">
       <selection-panel :algorithms="algorithms" />
     </div>
+
+    <div class="mx-n4 mt-5">
+      <encryption-form class="rounded-xl" />
+    </div>
   </v-container>
 </template>
 
@@ -49,12 +53,13 @@ import {
   mdiChevronUp
 } from "@mdi/js";
 import SelectionPanel from "./SelectionPanel.vue";
+import EncryptionForm from "./EncryptionForm.vue";
 import { mapState, mapActions } from "vuex";
 
 export default {
   name: "Home",
 
-  components: { SelectionPanel },
+  components: { SelectionPanel, EncryptionForm },
 
   data() {
     return {
