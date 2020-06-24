@@ -31,6 +31,7 @@
       class="mt-2 rounded-lg"
       :hide-details="hideDetails"
       hint="Hello World"
+      v-model="textinput"
     />
 
     <file-pond
@@ -47,6 +48,8 @@
       <v-radio label="Checksum" value="checksum" color="#5D737E" />
       <v-radio label="By Words" value="bywords" color="#5D737E" />
     </v-radio-group>
+
+    <v-btn color="#7FC6A4" depressed block>{{ action }}</v-btn>
   </div>
 </template>
 
@@ -69,7 +72,9 @@ export default {
 
       hideDetails: true,
 
-      icons: { mdiText, mdiFile }
+      icons: { mdiText, mdiFile },
+
+      textinput: ""
     };
   },
 

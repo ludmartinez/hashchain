@@ -8,13 +8,18 @@ export default new Vuex.Store({
   state: {
     action: "encrypt",
 
-    algorithms: {},
+    algorithms: [],
 
     mode: "text",
 
     selectedAlgorithm: {
       name: 0,
       type: 0
+    },
+
+    results: {
+      data: [],
+      completed: 0
     }
   },
 

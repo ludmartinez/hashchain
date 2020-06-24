@@ -52,6 +52,10 @@
     <div class="mx-n4 mt-5">
       <encryption-form class="rounded-xl" />
     </div>
+
+    <div class="mx-n4 rounded-xl bk-opacity mt-5">
+      <results-panel :results="results" />
+    </div>
   </v-container>
 </template>
 
@@ -64,12 +68,13 @@ import {
 } from "@mdi/js";
 import SelectionPanel from "./SelectionPanel.vue";
 import EncryptionForm from "./EncryptionForm.vue";
+import ResultsPanel from "./ResultsPanel.vue";
 import { mapState, mapActions } from "vuex";
 
 export default {
   name: "Home",
 
-  components: { SelectionPanel, EncryptionForm },
+  components: { SelectionPanel, EncryptionForm, ResultsPanel },
 
   data() {
     return {
@@ -84,7 +89,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["algorithms", "selectedAlgorithm", "action"])
+    ...mapState(["algorithms", "selectedAlgorithm", "action", "results"])
   },
 
   methods: {
