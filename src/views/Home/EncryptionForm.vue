@@ -29,8 +29,9 @@
       clearable
       auto-grow
       class="mt-2 rounded-lg"
+      persistent-hint
       :hide-details="hideDetails"
-      hint="Hello World"
+      :hint="`Total Words: ${this.inputWords.length}`"
       v-model="textinput"
     />
 
@@ -49,15 +50,18 @@
       <v-radio label="By Words" value="bywords" color="#5D737E" />
     </v-radio-group>
 
-    <v-btn color="#7FC6A4" depressed block>{{ action }}</v-btn>
+    <v-btn color="#7FC6A4" depressed block @click="encrypt()">
+      {{ action }}
+    </v-btn>
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState } from "vuex";
 import { mdiText, mdiFile } from "@mdi/js";
 import FilePond from "vue-filepond";
 import "filepond/dist/filepond.min.css";
+import cryptojs from "crypto-js";
 
 export default {
   name: "EncryptionForm",
@@ -74,16 +78,332 @@ export default {
 
       icons: { mdiText, mdiFile },
 
+      mode: "text",
+
       textinput: ""
     };
   },
 
   computed: {
-    ...mapState(["action", "mode"])
+    ...mapState(["action", "results"]),
+
+    inputWords() {
+      if (this.textinput) {
+        if (!this.textinput.trim()) return [];
+        const words = this.textinput.trim().split(" ");
+        const norepeatWords = [...new Set(words)];
+        return norepeatWords;
+      }
+      return [];
+    },
+
+    hashMd5() {
+      switch (this.mode) {
+        case "text": {
+          if (this.textinput) {
+            if (!this.textinput.trim()) return [];
+
+            switch (this.encryptionMethod) {
+              case "checksum": {
+                return [
+                  {
+                    text: this.textinput.trim(),
+                    hash: cryptojs.MD5(this.textinput.trim()).toString()
+                  }
+                ];
+              }
+
+              case "bywords": {
+                const words = [];
+                this.inputWords.forEach(word => {
+                  words.push({
+                    text: word,
+                    hash: cryptojs.MD5(word).toString()
+                  });
+                });
+                return words;
+              }
+
+              default:
+                break;
+            }
+          }
+          return [];
+        }
+
+        case "files": {
+          return "Not supported yet";
+        }
+      }
+
+      return [];
+    },
+
+    hashSha1() {
+      switch (this.mode) {
+        case "text": {
+          if (this.textinput) {
+            if (!this.textinput.trim()) return [];
+
+            switch (this.encryptionMethod) {
+              case "checksum": {
+                return [
+                  {
+                    text: this.textinput.trim(),
+                    hash: cryptojs.SHA1(this.textinput.trim()).toString()
+                  }
+                ];
+              }
+
+              case "bywords": {
+                const words = [];
+                this.inputWords.forEach(word => {
+                  words.push({
+                    text: word,
+                    hash: cryptojs.SHA1(word).toString()
+                  });
+                });
+                return words;
+              }
+
+              default:
+                break;
+            }
+          }
+          return [];
+        }
+
+        case "files": {
+          return "Not supported yet";
+        }
+      }
+
+      return [];
+    },
+
+    hashSha224() {
+      switch (this.mode) {
+        case "text": {
+          if (this.textinput) {
+            if (!this.textinput.trim()) return [];
+
+            switch (this.encryptionMethod) {
+              case "checksum": {
+                return [
+                  {
+                    text: this.textinput.trim(),
+                    hash: cryptojs.SHA224(this.textinput.trim()).toString()
+                  }
+                ];
+              }
+
+              case "bywords": {
+                const words = [];
+                this.inputWords.forEach(word => {
+                  words.push({
+                    text: word,
+                    hash: cryptojs.SHA224(word).toString()
+                  });
+                });
+                return words;
+              }
+
+              default:
+                break;
+            }
+          }
+          return [];
+        }
+
+        case "files": {
+          return "Not supported yet";
+        }
+      }
+
+      return [];
+    },
+
+    hashSha256() {
+      switch (this.mode) {
+        case "text": {
+          if (this.textinput) {
+            if (!this.textinput.trim()) return [];
+
+            switch (this.encryptionMethod) {
+              case "checksum": {
+                return [
+                  {
+                    text: this.textinput.trim(),
+                    hash: cryptojs.SHA256(this.textinput.trim()).toString()
+                  }
+                ];
+              }
+
+              case "bywords": {
+                const words = [];
+                this.inputWords.forEach(word => {
+                  words.push({
+                    text: word,
+                    hash: cryptojs.SHA256(word).toString()
+                  });
+                });
+                return words;
+              }
+
+              default:
+                break;
+            }
+          }
+          return [];
+        }
+
+        case "files": {
+          return "Not supported yet";
+        }
+      }
+
+      return [];
+    },
+
+    hashSha384() {
+      switch (this.mode) {
+        case "text": {
+          if (this.textinput) {
+            if (!this.textinput.trim()) return [];
+
+            switch (this.encryptionMethod) {
+              case "checksum": {
+                return [
+                  {
+                    text: this.textinput.trim(),
+                    hash: cryptojs.SHA384(this.textinput.trim()).toString()
+                  }
+                ];
+              }
+
+              case "bywords": {
+                const words = [];
+                this.inputWords.forEach(word => {
+                  words.push({
+                    text: word,
+                    hash: cryptojs.SHA384(word).toString()
+                  });
+                });
+                return words;
+              }
+
+              default:
+                break;
+            }
+          }
+          return [];
+        }
+
+        case "files": {
+          return "Not supported yet";
+        }
+      }
+
+      return [];
+    },
+
+    hashSha512() {
+      switch (this.mode) {
+        case "text": {
+          if (this.textinput) {
+            if (!this.textinput.trim()) return [];
+
+            switch (this.encryptionMethod) {
+              case "checksum": {
+                return [
+                  {
+                    text: this.textinput.trim(),
+                    hash: cryptojs.SHA512(this.textinput.trim()).toString()
+                  }
+                ];
+              }
+
+              case "bywords": {
+                const words = [];
+                this.inputWords.forEach(word => {
+                  words.push({
+                    text: word,
+                    hash: cryptojs.SHA512(word).toString()
+                  });
+                });
+                return words;
+              }
+
+              default:
+                break;
+            }
+          }
+          return [];
+        }
+
+        case "files": {
+          return "Not supported yet";
+        }
+      }
+
+      return [];
+    },
+
+    hashSha3() {
+      switch (this.mode) {
+        case "text": {
+          if (this.textinput) {
+            if (!this.textinput.trim()) return [];
+
+            switch (this.encryptionMethod) {
+              case "checksum": {
+                return [
+                  {
+                    text: this.textinput.trim(),
+                    hash: cryptojs.SHA3(this.textinput.trim()).toString()
+                  }
+                ];
+              }
+
+              case "bywords": {
+                const words = [];
+                this.inputWords.forEach(word => {
+                  words.push({
+                    text: word,
+                    hash: cryptojs.SHA3(word).toString()
+                  });
+                });
+                return words;
+              }
+
+              default:
+                break;
+            }
+          }
+          return [];
+        }
+
+        case "files": {
+          return "Not supported yet";
+        }
+      }
+
+      return [];
+    }
+  },
+
+  watch: {
+    encryptionMethod(newval) {
+      newval === "bywords"
+        ? (this.hideDetails = false)
+        : (this.hideDetails = true);
+    }
   },
 
   methods: {
-    ...mapActions(["toogle_mode"])
+    toogle_mode() {
+      this.mode === "text" ? (this.mode = "files") : (this.mode = "text");
+    }
   }
 };
 </script>
