@@ -50,14 +50,14 @@
       <v-radio label="By Words" value="bywords" color="#5D737E" />
     </v-radio-group>
 
-    <v-btn color="#7FC6A4" depressed block @click="encrypt()">
+    <v-btn color="#7FC6A4" depressed block @click="executeAction()">
       {{ action }}
     </v-btn>
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 import { mdiText, mdiFile } from "@mdi/js";
 import FilePond from "vue-filepond";
 import "filepond/dist/filepond.min.css";
@@ -86,11 +86,12 @@ export default {
 
   computed: {
     ...mapState(["action", "results"]),
+    ...mapGetters(["selectedAlgorithmType"]),
 
     inputWords() {
       if (this.textinput) {
         if (!this.textinput.trim()) return [];
-        const words = this.textinput.trim().split(" ");
+        const words = this.textinput.trim().split(/\s|\n/);
         const norepeatWords = [...new Set(words)];
         return norepeatWords;
       }
@@ -403,6 +404,52 @@ export default {
   methods: {
     toogle_mode() {
       this.mode === "text" ? (this.mode = "files") : (this.mode = "text");
+    },
+
+    encrypt() {
+      switch (this.selectedAlgorithmType) {
+        case "md5":
+          this.results.data = this.hashMd5;
+          this.results.completed = this.hashMd5.length;
+          break;
+
+        case "sha1":
+          this.results.data = this.hashSha1;
+          this.results.completed = this.hashSha1.length;
+          break;
+
+        case "sha224":
+          this.results.data = this.hashSha224;
+          this.results.completed = this.hashSha224.length;
+          break;
+
+        case "sha256":
+          this.results.data = this.hashSha256;
+          this.results.completed = this.hashSha256.length;
+          break;
+
+        case "sha384":
+          this.results.data = this.hashSha384;
+          this.results.completed = this.hashSha384.length;
+          break;
+
+        case "sha512":
+          this.results.data = this.hashSha512;
+          this.results.completed = this.hashSha512.length;
+          break;
+
+        case "sha3":
+          this.results.data = this.hashSha3;
+          this.results.completed = this.hashSha3.length;
+          break;
+
+        default:
+          break;
+      }
+    },
+
+    executeAction() {
+      this.action === "encrypt" ? this.encrypt() : this.decrypt();
     }
   }
 };

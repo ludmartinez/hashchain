@@ -10,8 +10,6 @@ export default new Vuex.Store({
 
     algorithms: [],
 
-    mode: "text",
-
     selectedAlgorithm: {
       name: 0,
       type: 0
@@ -41,10 +39,6 @@ export default new Vuex.Store({
       state.action === "encrypt"
         ? (state.action = "decrypt")
         : (state.action = "encrypt");
-    },
-
-    UPDATE_MODE(state) {
-      state.mode === "text" ? (state.mode = "files") : (state.mode = "text");
     }
   },
 
@@ -53,13 +47,17 @@ export default new Vuex.Store({
       commit("UPDATE_ACTION");
     },
 
-    toogle_mode({ commit }) {
-      commit("UPDATE_MODE");
-    },
-
     async retrive_algorithms({ commit }) {
       const algorithms = await algorithmService();
       commit("UPDATE_ALGORITHMS", algorithms);
+    }
+  },
+
+  getters: {
+    selectedAlgorithmType: state => {
+      return state.algorithms[state.selectedAlgorithm.name].types[
+        state.selectedAlgorithm.type
+      ];
     }
   },
 

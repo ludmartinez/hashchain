@@ -16,11 +16,7 @@
         @click="toogle_selection_panel()"
       >
         <h4 v-if="algorithms.length">
-          {{
-            algorithms[selectedAlgorithm.name].types[
-              selectedAlgorithm.type
-            ].toUpperCase()
-          }}
+          {{ selectedAlgorithmType.toUpperCase() }}
         </h4>
 
         <v-icon v-if="selectionPanel">
@@ -69,7 +65,7 @@ import {
 import SelectionPanel from "./SelectionPanel.vue";
 import EncryptionForm from "./EncryptionForm.vue";
 import ResultsPanel from "./ResultsPanel.vue";
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapGetters } from "vuex";
 
 export default {
   name: "Home",
@@ -89,7 +85,8 @@ export default {
   },
 
   computed: {
-    ...mapState(["algorithms", "selectedAlgorithm", "action", "results"])
+    ...mapState(["algorithms", "action", "results"]),
+    ...mapGetters(["selectedAlgorithmType"])
   },
 
   methods: {
