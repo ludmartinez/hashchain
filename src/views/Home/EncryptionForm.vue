@@ -27,7 +27,6 @@
       color="#7FC6A4"
       outlined
       clearable
-      auto-grow
       class="mt-2 rounded-lg"
       persistent-hint
       :hide-details="hideDetails"
@@ -93,7 +92,7 @@ export default {
         if (!this.textinput.trim()) return [];
         const words = this.textinput.trim().split(/\s|\n/);
         const norepeatWords = [...new Set(words)];
-        return norepeatWords;
+        return norepeatWords.filter(n => n);
       }
       return [];
     },
@@ -390,6 +389,48 @@ export default {
       }
 
       return [];
+    },
+
+    hashRipemd160() {
+      switch (this.mode) {
+        case "text": {
+          if (this.textinput) {
+            if (!this.textinput.trim()) return [];
+
+            switch (this.encryptionMethod) {
+              case "checksum": {
+                return [
+                  {
+                    text: this.textinput.trim(),
+                    hash: cryptojs.RIPEMD160(this.textinput.trim()).toString()
+                  }
+                ];
+              }
+
+              case "bywords": {
+                const words = [];
+                this.inputWords.forEach(word => {
+                  words.push({
+                    text: word,
+                    hash: cryptojs.RIPEMD160(word).toString()
+                  });
+                });
+                return words;
+              }
+
+              default:
+                break;
+            }
+          }
+          return [];
+        }
+
+        case "files": {
+          return "Not supported yet";
+        }
+      }
+
+      return [];
     }
   },
 
@@ -398,6 +439,17 @@ export default {
       newval === "bywords"
         ? (this.hideDetails = false)
         : (this.hideDetails = true);
+      this.executeAction();
+    },
+
+    textinput() {
+      this.results.data = [];
+      this.results.completed = 0;
+    },
+
+    selectedAlgorithmType() {
+      this.results.data = [];
+      this.results.completed = 0;
     }
   },
 
@@ -443,7 +495,14 @@ export default {
           this.results.completed = this.hashSha3.length;
           break;
 
+        case "ripemd160":
+          this.results.data = this.hashRipemd160;
+          this.results.completed = this.hashRipemd160.length;
+          break;
+
         default:
+          this.results.data = [];
+          this.results.completed = 0;
           break;
       }
     },
@@ -459,5 +518,5 @@ export default {
 .filepond--panel-root
   background-color: #F1F0EF
   border: 1px dashed #959594
-  min-height: 130px
+  min-height: 150px
 </style>

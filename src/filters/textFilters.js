@@ -4,4 +4,11 @@ const capitalize = value => {
   return value.charAt(0).toUpperCase() + value.slice(1);
 };
 
-export { capitalize };
+const limitCharacters = (value, limit = 100) => {
+  if (!value) return "";
+  if (value.length < limit) return value;
+  value = value.toString();
+  return value.slice(0, limit) + " ...";
+};
+
+export { capitalize, limitCharacters };

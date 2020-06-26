@@ -1,5 +1,5 @@
 <template>
-  <v-container class="blue-grey darken-1 rounded-t-xl px-4">
+  <v-container class="blue-grey darken-1 rounded-t-xl px-4 viewport-height">
     <v-toolbar
       flat
       tile
@@ -42,15 +42,15 @@
     </v-toolbar>
 
     <div v-if="selectionPanel" class="mx-n4 rounded-xl bk-opacity mt-5">
-      <selection-panel :algorithms="algorithms" />
+      <selection-panel />
     </div>
 
-    <div class="mx-n4 mt-5">
+    <div class="mx-n4 mt-5" v-if="algorithms.length">
       <encryption-form class="rounded-xl" />
     </div>
 
-    <div class="mx-n4 rounded-xl bk-opacity mt-5">
-      <results-panel :results="results" />
+    <div class="mx-n4 rounded-xl bk-opacity mt-5" v-if="algorithms.length">
+      <results-panel />
     </div>
   </v-container>
 </template>
@@ -85,7 +85,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["algorithms", "action", "results"]),
+    ...mapState(["algorithms", "action"]),
     ...mapGetters(["selectedAlgorithmType"])
   },
 
@@ -106,4 +106,7 @@ export default {
 
 .bk-opacity
   background-color: rgba(255, 255, 255, 0.2)
+
+.viewport-height
+  min-height: calc( 100vh - 56px )
 </style>

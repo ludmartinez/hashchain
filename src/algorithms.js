@@ -9,7 +9,7 @@ const algorithms = [
   },
   {
     name: "RACE Integrity Primitives Evaluation Message Digest",
-    types: ["RIPEMD160"]
+    types: ["ripemd160"]
   }
 ];
 

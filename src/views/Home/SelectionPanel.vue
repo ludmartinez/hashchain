@@ -37,17 +37,12 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "SelectionPanel",
 
-  props: {
-    algorithms: {
-      type: Array,
-      required: true
-    }
-  },
-
   computed: {
+    ...mapState(["algorithms"]),
     algorithmName: {
       get() {
         return this.$store.state.selectedAlgorithm.name;
